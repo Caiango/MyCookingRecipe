@@ -8,9 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.data.Resp
 import com.example.mycookingrecipe.databinding.FragmentMainBinding
-import com.example.mycookingrecipe.service.Call
+import com.example.mycookingrecipe.viewmodel.RecipeViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -22,6 +26,10 @@ class MainFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var recipeList = listOf<Recipe>()
+    private lateinit var recycler : RecyclerView
+    private lateinit var adapter: RecyclerAdapter
+    private lateinit var recipeViewModel: RecipeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +37,13 @@ class MainFragment : Fragment() {
     ): View? {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        Call.call(this::callBackFromSearch)
+        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
+        recipeViewModel.getRecipes()
+
+        recipeViewModel.recipeList.observe(viewLifecycleOwner, {
+            adapter = RecyclerAdapter(it, requireContext())
+            recycler.adapter = adapter
+        })
         return binding.root
 
     }
@@ -37,12 +51,13 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        recycler = binding.recyclerRecipe
         binding.editTextTextPersonName.addTextChangedListener(textChangedListener)
-    }
+        adapter = RecyclerAdapter(recipeList, requireContext())
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        recycler.setHasFixedSize(true)
+        recycler.adapter
 
-    fun callBackFromSearch(response: Resp?) {
-
-        Log.i("LISTA", response?.recipes.toString())
 
     }
 
