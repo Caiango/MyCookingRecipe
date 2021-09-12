@@ -1,11 +1,14 @@
 package com.example.mycookingrecipe.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.databinding.FragmentMainBinding
+import com.example.mycookingrecipe.utils.Constants
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
@@ -41,13 +42,13 @@ class MainFragment : Fragment() {
         recipeViewModel.getRecipes()
 
         recipeViewModel.recipeList.observe(viewLifecycleOwner, {
-            adapter = RecyclerAdapter(it, requireContext())
+            adapter = RecyclerAdapter(it, requireContext(), this::setRecipeFragmentArguments)
             recycler.adapter = adapter
             recipeList = it
         })
 
         recipeViewModel.recipeListFiltered.observe(viewLifecycleOwner, {
-            adapter = RecyclerAdapter(it, requireContext())
+            adapter = RecyclerAdapter(it, requireContext(), this::setRecipeFragmentArguments)
             recycler.adapter = adapter
             filteredRecipeList = it
         })
@@ -57,31 +58,29 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         recycler = binding.recyclerRecipe
         binding.editTextTextPersonName.doOnTextChanged { text, start, before, count ->
             val filter = binding.editTextTextPersonName.text.toString()
             recipeViewModel.filterList(recipeList, filter)
         }
-        adapter = RecyclerAdapter(recipeList, requireContext())
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.setHasFixedSize(true)
-        recycler.adapter
+
     }
 
-    //para brincar
-    object TextChangedListener : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                //treat data
 
+            }
         }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-
-        }
+    fun setRecipeFragmentArguments(id: Int) {
+        val intenet = Intent(requireContext(), RecipeActivity::class.java)
+        intenet.putExtra(Constants.SELECTED_RECIPE, recipeList[id])
+        resultLauncher.launch(intenet)
 
     }
 

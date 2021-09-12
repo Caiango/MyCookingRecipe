@@ -11,20 +11,26 @@ import com.example.mycookingrecipe.databinding.RecipeLayoutBinding
 
 class RecyclerAdapter(
     private val recipesList: List<Recipe>,
-    private val context: Context
-    //private val onClickCallback: (Int) -> Unit
+    private val context: Context,
+    private val onClickCallback: (Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(view: RecipeLayoutBinding) : RecyclerView.ViewHolder(view.root) {
         val title = view.recipeTitle
         val img = view.recipeImage
+        val layout = view.recipeLay
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.recipe_layout, parent, false)
         val binding = RecipeLayoutBinding.bind(view)
-        return ViewHolder(binding)
+        val viewHolder = ViewHolder(binding)
+        viewHolder.layout.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            onClickCallback(position)
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

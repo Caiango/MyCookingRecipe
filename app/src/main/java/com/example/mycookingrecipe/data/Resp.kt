@@ -1,3 +1,7 @@
 package com.example.mycookingrecipe.data
 
-data class Resp(val recipes: List<Recipe>)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Resp(val recipes: List<Recipe>) : Parcelable
