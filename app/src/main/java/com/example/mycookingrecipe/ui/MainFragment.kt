@@ -3,7 +3,6 @@ package com.example.mycookingrecipe.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,9 +76,9 @@ class MainFragment : Fragment() {
             }
         }
 
-    fun setRecipeFragmentArguments(id: Int) {
-        val intenet = Intent(requireContext(), RecipeActivity::class.java)
-        intenet.putExtra(Constants.SELECTED_RECIPE, recipeList[id])
+    fun setRecipeFragmentArguments(pos: Int) {
+        val intenet = Intent(requireContext(), SelectedRecipeActivity::class.java)
+        intenet.putExtra(Constants.SELECTED_RECIPE, recipeList[pos])
         resultLauncher.launch(intenet)
 
     }

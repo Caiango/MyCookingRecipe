@@ -11,4 +11,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title">MY COOKING RECIPE</string>
     <string name="search_recipe">Buscar Receita</string>
+    <string name="ingredientes">INGREDIENTES</string>
+    <string name="modo_de_preparo">MODO DE PREPARO</string>
 </resources>

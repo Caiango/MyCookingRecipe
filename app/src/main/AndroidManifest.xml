@@ -14,8 +14,10 @@
         android:theme="@style/Theme.MyCookingRecipe"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.RecipeActivity"
-            android:exported="true" />
+            android:name=".ui.SelectedRecipeActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyCookingRecipe.NoActionBar" />
         <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
@@ -30,7 +32,7 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MyCookingRecipe.NoActionBar"></activity>
+            android:theme="@style/Theme.MyCookingRecipe.NoActionBar" />
     </application>
 
 </manifest>
