@@ -76,11 +76,21 @@ class MainFragment : Fragment() {
             }
         }
 
-    fun setRecipeFragmentArguments(pos: Int) {
-        val intenet = Intent(requireContext(), SelectedRecipeActivity::class.java)
-        intenet.putExtra(Constants.SELECTED_RECIPE, recipeList[pos])
-        resultLauncher.launch(intenet)
+    private fun setRecipeFragmentArguments(pos: Int) {
+        if (!isFiltered()) {
+            val intent = Intent(requireContext(), SelectedRecipeActivity::class.java)
+            intent.putExtra(Constants.SELECTED_RECIPE, recipeList[pos])
+            resultLauncher.launch(intent)
+        } else {
+            val intent = Intent(requireContext(), SelectedRecipeActivity::class.java)
+            intent.putExtra(Constants.SELECTED_RECIPE, filteredRecipeList[pos])
+            resultLauncher.launch(intent)
+        }
 
+    }
+
+    private fun isFiltered(): Boolean {
+        return adapter.itemCount != recipeList.size
     }
 
     override fun onDestroyView() {
