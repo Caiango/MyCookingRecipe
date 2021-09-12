@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class RecipeViewModel : ViewModel() {
 
     val recipeList: MutableLiveData<List<Recipe>> = MutableLiveData()
+    val recipeListFiltered: MutableLiveData<List<Recipe>> = MutableLiveData()
 
     fun getRecipes() {
         viewModelScope.launch {
@@ -18,7 +19,23 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
-    fun callbackFromGetRecipes(response: Resp?){
-        recipeList.postValue(response!!.recipes)
+    fun callbackFromGetRecipes(response: Resp?) {
+        if (response != null) {
+            recipeList.postValue(response.recipes)
+        }
+    }
+
+    fun filterList(fulList: List<Recipe>, filter: String) {
+        if (filter != "") {
+            var filteredList = fulList.filter {
+                it.name.contains(
+                    filter,
+                    ignoreCase = true
+                ) || it.ingredients.contains(filter, ignoreCase = true)
+            }
+            recipeListFiltered.postValue(filteredList)
+        } else {
+            recipeList.postValue(fulList)
+        }
     }
 }
