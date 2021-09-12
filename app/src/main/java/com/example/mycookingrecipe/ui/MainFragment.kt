@@ -22,8 +22,6 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private var recipeList = listOf<Recipe>()
     private var filteredRecipeList = listOf<Recipe>()
@@ -52,19 +50,17 @@ class MainFragment : Fragment() {
             filteredRecipeList = it
         })
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler = binding.recyclerRecipe
-        binding.editTextTextPersonName.doOnTextChanged { text, start, before, count ->
+        binding.editTextTextPersonName.doOnTextChanged { _, _, _, _ ->
             val filter = binding.editTextTextPersonName.text.toString()
             recipeViewModel.filterList(recipeList, filter)
         }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.setHasFixedSize(true)
-
     }
 
     var resultLauncher =
@@ -72,21 +68,17 @@ class MainFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 //treat data
-
             }
         }
 
     private fun setRecipeFragmentArguments(pos: Int) {
+        val intent = Intent(requireContext(), SelectedRecipeActivity::class.java)
         if (!isFiltered()) {
-            val intent = Intent(requireContext(), SelectedRecipeActivity::class.java)
             intent.putExtra(Constants.SELECTED_RECIPE, recipeList[pos])
-            resultLauncher.launch(intent)
         } else {
-            val intent = Intent(requireContext(), SelectedRecipeActivity::class.java)
             intent.putExtra(Constants.SELECTED_RECIPE, filteredRecipeList[pos])
-            resultLauncher.launch(intent)
         }
-
+        resultLauncher.launch(intent)
     }
 
     private fun isFiltered(): Boolean {
