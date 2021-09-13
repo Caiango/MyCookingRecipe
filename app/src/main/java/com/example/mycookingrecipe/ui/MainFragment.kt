@@ -38,6 +38,19 @@ class MainFragment : Fragment() {
         recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         recipeViewModel.getRecipes()
 
+        //insert =
+        /*
+        val recipeTest = Recipe(
+            id = 0,
+            name = "novo",
+            ingredients = "novo",
+            description = "novo",
+            image = "novo"
+        )
+        recipeViewModel.insertRecipe(recipeTest)
+
+         */
+
         recipeViewModel.recipeList.observe(viewLifecycleOwner, {
             adapter = RecyclerAdapter(it, requireContext(), this::setRecipeFragmentArguments)
             recycler.adapter = adapter

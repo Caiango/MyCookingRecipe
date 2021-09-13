@@ -15,7 +15,13 @@ class RecipeViewModel : ViewModel() {
 
     fun getRecipes() {
         viewModelScope.launch {
-            Call.call(this@RecipeViewModel::callbackFromGetRecipes)
+            Call.callGetAll(this@RecipeViewModel::callbackFromGetRecipes)
+        }
+    }
+
+    fun insertRecipe(recipe: Recipe){
+        viewModelScope.launch {
+            Call.callInsert(recipe)
         }
     }
 
