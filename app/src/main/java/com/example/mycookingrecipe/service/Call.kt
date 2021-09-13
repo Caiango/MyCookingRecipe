@@ -3,6 +3,7 @@ package com.example.mycookingrecipe.service
 import android.util.Log
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.data.Resp
+import com.example.mycookingrecipe.data.ReturnFromApi
 import retrofit2.Callback
 import retrofit2.Response
 
@@ -14,7 +15,7 @@ class Call {
             call.enqueue(object : Callback<Resp> {
                 override fun onResponse(call: retrofit2.Call<Resp>, resp: Response<Resp>) {
                     resp?.body()?.let {
-                        Log.d("sucesso", "sucesso")
+                        Log.d("sucesso", "lista recuperada")
                         val response: Resp = it
                         callback(response)
                     }
@@ -31,17 +32,17 @@ class Call {
         fun callInsert(recipe: Recipe) {
             val call = RetrofitInitializer().repoService().insertRecipe(recipe)
 
-            call.enqueue(object : Callback<String> {
-                override fun onResponse(call: retrofit2.Call<String>, resp: Response<String>) {
+            call.enqueue(object : Callback<ReturnFromApi> {
+                override fun onResponse(call: retrofit2.Call<ReturnFromApi>, resp: Response<ReturnFromApi>) {
                     resp?.body()?.let {
 
-                        val response: String = it
-                        Log.d("sucesso", response)
+                        val response: ReturnFromApi = it
+                        Log.d("sucesso", response.message)
                         //callback(response)
                     }
                 }
 
-                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                override fun onFailure(call: retrofit2.Call<ReturnFromApi>, t: Throwable) {
                     Log.d("erro", t.toString())
                     //callback(null)
                 }

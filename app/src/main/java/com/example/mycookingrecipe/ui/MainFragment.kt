@@ -39,7 +39,7 @@ class MainFragment : Fragment() {
         recipeViewModel.getRecipes()
 
         //insert =
-        /*
+        //*
         val recipeTest = Recipe(
             id = 0,
             name = "novo",
@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
         )
         recipeViewModel.insertRecipe(recipeTest)
 
-         */
+         //*/
 
         recipeViewModel.recipeList.observe(viewLifecycleOwner, {
             adapter = RecyclerAdapter(it, requireContext(), this::setRecipeFragmentArguments)
