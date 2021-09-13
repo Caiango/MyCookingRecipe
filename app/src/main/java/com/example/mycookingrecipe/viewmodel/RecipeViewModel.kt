@@ -19,7 +19,7 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
-    fun callbackFromGetRecipes(response: Resp?) {
+    private fun callbackFromGetRecipes(response: Resp?) {
         if (response != null) {
             recipeList.postValue(response.recipes)
         }
