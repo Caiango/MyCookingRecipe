@@ -1,13 +1,10 @@
 package com.example.mycookingrecipe.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -38,27 +35,14 @@ class MainFragment : Fragment() {
         recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         recipeViewModel.getRecipes()
 
-        //insert =
-        //*
-        val recipeTest = Recipe(
-            id = 0,
-            name = "novo",
-            ingredients = "novo",
-            description = "novo",
-            image = "novo"
-        )
-        recipeViewModel.insertRecipe(recipeTest)
-
-         //*/
-
         recipeViewModel.recipeList.observe(viewLifecycleOwner, {
-            adapter = RecyclerAdapter(it, requireContext(), this::setRecipeFragmentArguments)
+            adapter = RecyclerAdapter(it, requireContext(), this::setIntentSelectedRecipe)
             recycler.adapter = adapter
             recipeList = it
         })
 
         recipeViewModel.recipeListFiltered.observe(viewLifecycleOwner, {
-            adapter = RecyclerAdapter(it, requireContext(), this::setRecipeFragmentArguments)
+            adapter = RecyclerAdapter(it, requireContext(), this::setIntentSelectedRecipe)
             recycler.adapter = adapter
             filteredRecipeList = it
         })
@@ -76,22 +60,14 @@ class MainFragment : Fragment() {
         recycler.setHasFixedSize(true)
     }
 
-    var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                //treat data
-            }
-        }
-
-    private fun setRecipeFragmentArguments(pos: Int) {
+    private fun setIntentSelectedRecipe(pos: Int) {
         val intent = Intent(requireContext(), SelectedRecipeActivity::class.java)
         if (!isFiltered()) {
             intent.putExtra(Constants.SELECTED_RECIPE, recipeList[pos])
         } else {
             intent.putExtra(Constants.SELECTED_RECIPE, filteredRecipeList[pos])
         }
-        resultLauncher.launch(intent)
+        startActivity(intent)
     }
 
     private fun isFiltered(): Boolean {

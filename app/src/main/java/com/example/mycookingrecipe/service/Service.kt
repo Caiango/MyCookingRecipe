@@ -4,9 +4,7 @@ import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.data.Resp
 import com.example.mycookingrecipe.data.ReturnFromApi
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Service {
     @GET("recipes")
@@ -15,6 +13,6 @@ interface Service {
     @POST("recipes")
     fun insertRecipe(@Body recipe: Recipe): Call<ReturnFromApi>
 
-    @POST("recipes/")
-    fun updateRecipe(@Body recipe: Recipe)
+    @PUT
+    fun updateRecipe(@Body recipe: Recipe, @Url url: String): Call<ReturnFromApi>
 }

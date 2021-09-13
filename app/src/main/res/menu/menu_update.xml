@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.mycookingrecipe.ui.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_update"
         android:orderInCategory="100"
+        android:icon="@drawable/ic_save"
         android:title="@string/action_editar"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

@@ -14,6 +14,14 @@
         android:theme="@style/Theme.MyCookingRecipe"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.UpdateRecipeActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyCookingRecipe.NoActionBar"  />
+        <activity
             android:name=".ui.SelectedRecipeActivity"
             android:exported="true"
             android:label="@string/app_name"

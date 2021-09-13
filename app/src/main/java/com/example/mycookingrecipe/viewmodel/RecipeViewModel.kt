@@ -25,6 +25,13 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
+    fun updateRecipe(recipe: Recipe, url: String, callback: (Recipe) -> Unit, updatedRecipe: Recipe){
+        viewModelScope.launch {
+            Call.callUpdate(recipe, url)
+            callback(updatedRecipe)
+        }
+    }
+
     private fun callbackFromGetRecipes(response: Resp?) {
         if (response != null) {
             recipeList.postValue(response.recipes)

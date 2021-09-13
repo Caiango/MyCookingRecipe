@@ -25,7 +25,6 @@ class Call {
                     Log.d("erro", t.toString())
                     callback(null)
                 }
-
             })
         }
 
@@ -33,20 +32,39 @@ class Call {
             val call = RetrofitInitializer().repoService().insertRecipe(recipe)
 
             call.enqueue(object : Callback<ReturnFromApi> {
-                override fun onResponse(call: retrofit2.Call<ReturnFromApi>, resp: Response<ReturnFromApi>) {
+                override fun onResponse(
+                    call: retrofit2.Call<ReturnFromApi>,
+                    resp: Response<ReturnFromApi>
+                ) {
                     resp?.body()?.let {
-
                         val response: ReturnFromApi = it
                         Log.d("sucesso", response.message)
-                        //callback(response)
                     }
                 }
 
                 override fun onFailure(call: retrofit2.Call<ReturnFromApi>, t: Throwable) {
                     Log.d("erro", t.toString())
-                    //callback(null)
+                }
+            })
+        }
+
+        fun callUpdate(recipe: Recipe, url: String) {
+            val call = RetrofitInitializer().repoService().updateRecipe(recipe, url)
+
+            call.enqueue(object : Callback<ReturnFromApi> {
+                override fun onResponse(
+                    call: retrofit2.Call<ReturnFromApi>,
+                    resp: Response<ReturnFromApi>
+                ) {
+                    resp?.body()?.let {
+                        val response: ReturnFromApi = it
+                        Log.d("sucesso", response.message)
+                    }
                 }
 
+                override fun onFailure(call: retrofit2.Call<ReturnFromApi>, t: Throwable) {
+                    Log.d("erro", t.toString())
+                }
             })
         }
     }
