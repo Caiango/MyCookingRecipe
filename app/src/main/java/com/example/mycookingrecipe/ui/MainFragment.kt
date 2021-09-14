@@ -68,10 +68,16 @@ class MainFragment : Fragment() {
             intent.putExtra(Constants.SELECTED_RECIPE, filteredRecipeList[pos])
         }
         startActivity(intent)
+        childFragmentManager.beginTransaction().remove(MainFragment()).commitAllowingStateLoss()
     }
 
     private fun isFiltered(): Boolean {
         return adapter.itemCount != recipeList.size
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recipeViewModel.getRecipes()
     }
 
     override fun onDestroyView() {

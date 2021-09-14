@@ -114,6 +114,17 @@ class UpdateRecipeActivity : AppCompatActivity() {
     }
 
     private fun goBackToHome() {
+        val intent = Intent(this, SelectedRecipeActivity::class.java)
+        intent.putExtra(Constants.SELECTED_RECIPE, recipe)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, SelectedRecipeActivity::class.java)
+        intent.putExtra(Constants.SELECTED_RECIPE, recipe)
+        startActivity(intent)
         finish()
     }
 }
