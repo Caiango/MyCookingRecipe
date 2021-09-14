@@ -19,17 +19,26 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
-    fun insertRecipe(recipe: Recipe){
+    fun insertRecipe(recipe: Recipe) {
         viewModelScope.launch {
             Call.callInsert(recipe)
         }
     }
 
-    fun updateRecipe(recipe: Recipe, url: String, callback: (Recipe) -> Unit, updatedRecipe: Recipe){
+    fun updateRecipe(
+        recipe: Recipe,
+        url: String,
+        callback: (Recipe) -> Unit,
+        updatedRecipe: Recipe
+    ) {
         viewModelScope.launch {
             Call.callUpdate(recipe, url)
             callback(updatedRecipe)
         }
+    }
+
+    fun deleteRecipe(url: String) {
+        Call.callDelete(url)
     }
 
     private fun callbackFromGetRecipes(response: Resp?) {

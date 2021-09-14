@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyCookingRecipe</string>
     <string name="action_editar">Editar Receita</string>
+    <string name="action_deletar">Deletar Receita</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -13,4 +14,8 @@
     <string name="search_recipe">Buscar Receita</string>
     <string name="ingredientes">INGREDIENTES</string>
     <string name="modo_de_preparo">MODO DE PREPARO</string>
+    <string name="delete_recipe_dialog">Deseja Deletar a Receita Selecionada?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="sim">Sim</string>
+    <string name="cancelado">Cancelado</string>
 </resources>

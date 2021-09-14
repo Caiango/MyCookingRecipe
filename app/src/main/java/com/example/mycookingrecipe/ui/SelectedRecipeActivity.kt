@@ -1,20 +1,29 @@
 package com.example.mycookingrecipe.ui
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mycookingrecipe.R
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.databinding.ActivityRecipeBinding
 import com.example.mycookingrecipe.utils.Constants
+import com.example.mycookingrecipe.viewmodel.RecipeViewModel
+import kotlinx.coroutines.launch
 
 class SelectedRecipeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeBinding
     private lateinit var selectRecipe: Recipe
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var DELETE_URL: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeBinding.inflate(layoutInflater)
@@ -36,7 +45,9 @@ class SelectedRecipeActivity : AppCompatActivity() {
         val bundle = intent
         val recipe = bundle.getParcelableExtra<Recipe>(Constants.SELECTED_RECIPE)
         selectRecipe = recipe!!
+        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         showRecipe(recipe)
+        DELETE_URL = "recipes/${recipe.id}"
     }
 
     private fun showRecipe(recipe: Recipe) {
@@ -61,6 +72,10 @@ class SelectedRecipeActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+            R.id.action_delete -> {
+                deleteDialog()
+                return true
+            }
 
             else -> super.onOptionsItemSelected(item)
         }
@@ -77,5 +92,20 @@ class SelectedRecipeActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun deleteDialog() {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(getString(R.string.delete_recipe_dialog))
+        dialog.setPositiveButton(getString(R.string.sim)) { _: DialogInterface, _: Int ->
+            lifecycleScope.launch {
+                recipeViewModel.deleteRecipe(DELETE_URL)
+                goBackToHome()
+            }
+        }
+        dialog.setNegativeButton(getString(R.string.cancelar)) { _: DialogInterface, _: Int ->
+            Toast.makeText(this, getString(R.string.cancelado), Toast.LENGTH_SHORT).show()
+        }
+        dialog.show()
     }
 }

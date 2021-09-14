@@ -15,4 +15,7 @@ interface Service {
 
     @PUT
     fun updateRecipe(@Body recipe: Recipe, @Url url: String): Call<ReturnFromApi>
+
+    @DELETE
+    fun deleteRecipe(@Url url: String): Call<ReturnFromApi>
 }
