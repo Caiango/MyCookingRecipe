@@ -29,6 +29,6 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_restaurant" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

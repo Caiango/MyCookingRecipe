@@ -17,12 +17,13 @@ import com.example.mycookingrecipe.databinding.ActivityRecipeBinding
 import com.example.mycookingrecipe.utils.Constants
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectedRecipeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeBinding
     private lateinit var selectRecipe: Recipe
-    private lateinit var recipeViewModel: RecipeViewModel
+    private val recipeViewModel: RecipeViewModel by viewModel()
     private lateinit var DELETE_URL: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,6 @@ class SelectedRecipeActivity : AppCompatActivity() {
         val bundle = intent
         val recipe = bundle.getParcelableExtra<Recipe>(Constants.SELECTED_RECIPE)
         selectRecipe = recipe!!
-        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         showRecipe(recipe)
         DELETE_URL = "recipes/${recipe.id}"
     }

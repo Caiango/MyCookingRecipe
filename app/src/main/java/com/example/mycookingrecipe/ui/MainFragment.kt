@@ -14,6 +14,7 @@ import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.databinding.FragmentMainBinding
 import com.example.mycookingrecipe.utils.Constants
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
@@ -24,7 +25,8 @@ class MainFragment : Fragment() {
     private var filteredRecipeList = listOf<Recipe>()
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: RecyclerAdapter
-    lateinit var recipeViewModel: RecipeViewModel
+
+    private val recipeViewModel: RecipeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,6 @@ class MainFragment : Fragment() {
     ): View? {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         recipeViewModel.getRecipes()
 
         recipeViewModel.recipeList.observe(viewLifecycleOwner, {

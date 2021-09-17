@@ -16,6 +16,7 @@ import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.databinding.ActivityUpdateRecipeBinding
 import com.example.mycookingrecipe.utils.Constants
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdateRecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateRecipeBinding
@@ -27,7 +28,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
     private lateinit var etTitle: EditText
     private lateinit var etIngredients: EditText
     private lateinit var etImg: ImageView
-    lateinit var recipeViewModel: RecipeViewModel
+    private val recipeViewModel: RecipeViewModel by viewModel()
     private lateinit var UPDATE_URL: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,6 @@ class UpdateRecipeActivity : AppCompatActivity() {
         binding = ActivityUpdateRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
         mountAppBar()
         assignElements()
         mountEditableRecipe(title, ingredients, prepare)
