@@ -16,4 +16,7 @@ interface RecipesDao {
 
     @Query("SELECT * FROM recipes WHERE id = :id")
     suspend fun getRecipe(id: Int): Recipe
+
+    @Query("UPDATE recipes SET name = :name, ingredients = :ingredients, description = :desc, image = :img WHERE id = :id")
+    suspend fun updateRecipe(id: Int, name: String, ingredients: String, desc: String, img: String)
 }

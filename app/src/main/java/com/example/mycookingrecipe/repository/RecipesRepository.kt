@@ -20,4 +20,15 @@ class RecipesRepository(private val dao: RecipesDao) {
     suspend fun getRecipe(id: Int): Recipe {
         return dao.getRecipe(id)
     }
+
+    suspend fun updateRecipe(recipe: Recipe) {
+        dao.updateRecipe(
+            recipe.id,
+            recipe.name,
+            recipe.ingredients,
+            recipe.description,
+            recipe.image
+        )
+    }
+
 }

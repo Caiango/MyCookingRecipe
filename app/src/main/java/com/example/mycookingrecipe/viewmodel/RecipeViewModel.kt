@@ -71,6 +71,14 @@ class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
         }
     }
 
+    fun locallyUpdate(recipe: Recipe){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.updateRecipe(recipe)
+            }
+        }
+    }
+
     fun filterList(fulList: List<Recipe>, filter: String) {
         if (filter != "") {
             val filteredList = fulList.filter {

@@ -130,7 +130,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             )
                 .show()
-
+            recipeViewModel.locallyUpdate(recipe)
             callSelectRecipeScreenSuccess(recipe)
         }
     }
