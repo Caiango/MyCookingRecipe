@@ -9,7 +9,7 @@ import com.example.mycookingrecipe.data.Recipe
 @Database(entities = [Recipe::class], version = 1)
 abstract class DatabaseInstance : RoomDatabase() {
 
-    abstract val weatherDao: RecipesDao
+    abstract val recipesDao: RecipesDao
 
     companion object {
         @Volatile
