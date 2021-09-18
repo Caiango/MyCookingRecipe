@@ -48,7 +48,11 @@ class Call {
             })
         }
 
-        fun callUpdate(recipe: Recipe, url: String) {
+        fun callUpdate(
+            recipe: Recipe,
+            url: String,
+            updateCallback: (String, Recipe) -> Unit
+        ) {
             val call = RetrofitInitializer().repoService().updateRecipe(recipe, url)
 
             call.enqueue(object : Callback<ReturnFromApi> {
@@ -58,12 +62,13 @@ class Call {
                 ) {
                     resp?.body()?.let {
                         val response: ReturnFromApi = it
-                        Log.d("sucesso", response.message)
+                        updateCallback(response.message, recipe)
                     }
                 }
 
                 override fun onFailure(call: retrofit2.Call<ReturnFromApi>, t: Throwable) {
-                    Log.d("erro", t.toString())
+                    Log.d("updateError", t.toString())
+                    updateCallback("404", recipe)
                 }
             })
         }

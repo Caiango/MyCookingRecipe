@@ -2,7 +2,6 @@ package com.example.mycookingrecipe.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -95,33 +94,56 @@ class UpdateRecipeActivity : AppCompatActivity() {
         val updatedIngredients = etIngredients.text.toString()
         val updatedRecipe =
             Recipe(recipe.id, updatedTitle, updatedIngredients, updatedPrepare, updatedImg)
+
         recipeViewModel.updateRecipe(
             updatedRecipe,
             UPDATE_URL,
-            this::callSelectedRecipe
+            this::updateCallback
         )
     }
 
-    private fun callSelectedRecipe(recipe: Recipe) {
-        Toast.makeText(applicationContext, "Atualizado com Sucesso!", Toast.LENGTH_LONG).show()
-        Log.d("teste", recipe.toString())
-        val intent = Intent(this, SelectedRecipeActivity::class.java)
-        intent.putExtra(Constants.SELECTED_RECIPE, recipe)
-        startActivity(intent)
-        finish()
-    }
-
     private fun goBackToHome() {
-        val intent = Intent(this, SelectedRecipeActivity::class.java)
-        intent.putExtra(Constants.SELECTED_RECIPE, recipe)
-        startActivity(intent)
-        finish()
+        backToSelectedRecipeScreen()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
+        backToSelectedRecipeScreen()
+    }
+
+    private fun backToSelectedRecipeScreen() {
         val intent = Intent(this, SelectedRecipeActivity::class.java)
         intent.putExtra(Constants.SELECTED_RECIPE, recipe)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun updateCallback(message: String, recipe: Recipe) {
+        if (message == "404") {
+            Toast.makeText(applicationContext, getString(R.string.onError), Toast.LENGTH_LONG)
+                .show()
+            callMainScreen()
+        } else {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.onSuccess_Update),
+                Toast.LENGTH_LONG
+            )
+                .show()
+
+            callSelectRecipeScreenSuccess(recipe)
+        }
+    }
+
+    private fun callSelectRecipeScreenSuccess(updatedRecipe: Recipe) {
+        val intent = Intent(this, SelectedRecipeActivity::class.java)
+        intent.putExtra(Constants.SELECTED_RECIPE, updatedRecipe)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun callMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }

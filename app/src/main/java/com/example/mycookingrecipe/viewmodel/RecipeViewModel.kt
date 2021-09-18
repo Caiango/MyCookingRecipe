@@ -7,7 +7,9 @@ import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.data.Resp
 import com.example.mycookingrecipe.repository.RecipesRepository
 import com.example.mycookingrecipe.service.Call
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
 
@@ -20,31 +22,44 @@ class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
         }
     }
 
-    fun insertRecipe(recipe: Recipe) {
+    private fun callbackFromGetRecipes(response: Resp?) {
+        if (response != null) {
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    response.recipes.forEach {
+                        repository.insert(it)
+                    }
+                    recipeList.postValue(repository.getAllRecipes())
+                }
+            }
+        } else {
+            viewModelScope.launch { recipeList.postValue(repository.getAllRecipes()) }
+
+        }
+    }
+
+    fun insertNewRecipe(recipe: Recipe) {
         viewModelScope.launch {
             Call.callInsert(recipe)
+            withContext(Dispatchers.IO) {
+                repository.insert(recipe)
+            }
         }
     }
 
     fun updateRecipe(
         recipe: Recipe,
         url: String,
-        callback: (Recipe) -> Unit
+        updateCallback: (String, Recipe) -> Unit
     ) {
         viewModelScope.launch {
-            Call.callUpdate(recipe, url)
-            callback(recipe)
+            Call.callUpdate(recipe, url, updateCallback)
+            //backCallback(recipe)
         }
     }
 
     fun deleteRecipe(url: String) {
         Call.callDelete(url)
-    }
-
-    private fun callbackFromGetRecipes(response: Resp?) {
-        if (response != null) {
-            recipeList.postValue(response.recipes)
-        }
     }
 
     fun filterList(fulList: List<Recipe>, filter: String) {

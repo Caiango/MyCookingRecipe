@@ -18,4 +18,6 @@
     <string name="cancelar">Cancelar</string>
     <string name="sim">Sim</string>
     <string name="cancelado">Cancelado</string>
+    <string name="onError">Erro no servidor! Por favor tente novamente</string>
+    <string name="onSuccess_Update">Atualizado com Sucesso!</string>
 </resources>

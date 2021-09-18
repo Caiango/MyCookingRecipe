@@ -13,11 +13,11 @@ class RecipesRepository(private val dao: RecipesDao) {
         dao.delete(recipe)
     }
 
-    suspend fun getAllRecipes() {
-        dao.getAllRecipes()
+    suspend fun getAllRecipes(): List<Recipe> {
+        return dao.getAllRecipes()
     }
 
-    suspend fun getRecipe(id: Int) {
-        dao.getRecipe(id)
+    suspend fun getRecipe(id: Int): Recipe {
+        return dao.getRecipe(id)
     }
 }
