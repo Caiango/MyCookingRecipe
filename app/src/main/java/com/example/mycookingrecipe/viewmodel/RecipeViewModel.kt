@@ -54,17 +54,26 @@ class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
     ) {
         viewModelScope.launch {
             Call.callUpdate(recipe, url, updateCallback)
-            //backCallback(recipe)
         }
     }
 
-    fun deleteRecipe(url: String) {
-        Call.callDelete(url)
+    fun deleteRecipe(url: String, deleteCallback: (String) -> Unit) {
+        viewModelScope.launch {
+            Call.callDelete(url, deleteCallback)
+        }
+    }
+
+    fun locallyDelete(recipe: Recipe){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.delete(recipe)
+            }
+        }
     }
 
     fun filterList(fulList: List<Recipe>, filter: String) {
         if (filter != "") {
-            var filteredList = fulList.filter {
+            val filteredList = fulList.filter {
                 it.name.contains(
                     filter,
                     ignoreCase = true

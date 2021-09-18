@@ -8,14 +8,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mycookingrecipe.R
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.databinding.ActivityRecipeBinding
 import com.example.mycookingrecipe.utils.Constants
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectedRecipeActivity : AppCompatActivity() {
@@ -97,14 +95,26 @@ class SelectedRecipeActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
         dialog.setTitle(getString(R.string.delete_recipe_dialog))
         dialog.setPositiveButton(getString(R.string.sim)) { _: DialogInterface, _: Int ->
-            lifecycleScope.launch {
-                recipeViewModel.deleteRecipe(DELETE_URL)
-                goBackToHome()
-            }
+            recipeViewModel.deleteRecipe(DELETE_URL, this::deleteCallback)
         }
         dialog.setNegativeButton(getString(R.string.cancelar)) { _: DialogInterface, _: Int ->
             Toast.makeText(this, getString(R.string.cancelado), Toast.LENGTH_SHORT).show()
         }
         dialog.show()
+    }
+
+    private fun deleteCallback(message: String) {
+        if (message == "404") {
+            Toast.makeText(applicationContext, getString(R.string.onError), Toast.LENGTH_LONG)
+                .show()
+        } else {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.success_delete),
+                Toast.LENGTH_LONG
+            ).show()
+            recipeViewModel.locallyDelete(selectRecipe)
+            goBackToHome()
+        }
     }
 }

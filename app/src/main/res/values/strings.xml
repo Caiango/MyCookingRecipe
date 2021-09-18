@@ -20,4 +20,5 @@
     <string name="cancelado">Cancelado</string>
     <string name="onError">Erro no servidor! Por favor tente novamente</string>
     <string name="onSuccess_Update">Atualizado com Sucesso!</string>
+    <string name="success_delete">Deletado com Sucesso!</string>
 </resources>

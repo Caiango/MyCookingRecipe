@@ -73,7 +73,7 @@ class Call {
             })
         }
 
-        fun callDelete(url: String) {
+        fun callDelete(url: String, callback: (String) -> Unit) {
             val call = RetrofitInitializer().repoService().deleteRecipe(url)
 
             call.enqueue(object : Callback<ReturnFromApi> {
@@ -84,11 +84,13 @@ class Call {
                     resp?.body()?.let {
                         val response: ReturnFromApi = it
                         Log.d("sucesso", response.message)
+                        callback(it.message)
                     }
                 }
 
                 override fun onFailure(call: retrofit2.Call<ReturnFromApi>, t: Throwable) {
                     Log.d("erro", t.toString())
+                    callback("404")
                 }
             })
         }
