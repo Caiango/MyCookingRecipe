@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.mycookingrecipe.R
 import com.example.mycookingrecipe.data.Recipe
@@ -99,8 +98,7 @@ class UpdateRecipeActivity : AppCompatActivity() {
         recipeViewModel.updateRecipe(
             updatedRecipe,
             UPDATE_URL,
-            this::callSelectedRecipe,
-            updatedRecipe
+            this::callSelectedRecipe
         )
     }
 

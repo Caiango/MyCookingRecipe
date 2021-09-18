@@ -28,12 +28,11 @@ class RecipeViewModel : ViewModel() {
     fun updateRecipe(
         recipe: Recipe,
         url: String,
-        callback: (Recipe) -> Unit,
-        updatedRecipe: Recipe
+        callback: (Recipe) -> Unit
     ) {
         viewModelScope.launch {
             Call.callUpdate(recipe, url)
-            callback(updatedRecipe)
+            callback(recipe)
         }
     }
 
