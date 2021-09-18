@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.data.Resp
+import com.example.mycookingrecipe.repository.RecipesRepository
 import com.example.mycookingrecipe.service.Call
 import kotlinx.coroutines.launch
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
 
     val recipeList: MutableLiveData<List<Recipe>> = MutableLiveData()
     val recipeListFiltered: MutableLiveData<List<Recipe>> = MutableLiveData()

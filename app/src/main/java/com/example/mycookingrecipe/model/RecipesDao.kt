@@ -1,17 +1,15 @@
 package com.example.mycookingrecipe.model
 
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.mycookingrecipe.data.Recipe
 
+@Dao
 interface RecipesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(city: Recipe)
+    suspend fun insert(recipe: Recipe)
 
     @Delete
-    suspend fun delete(city: Recipe)
+    suspend fun delete(recipe: Recipe)
 
     @Query("SELECT * FROM recipes")
     suspend fun getAllRecipes(): List<Recipe>
