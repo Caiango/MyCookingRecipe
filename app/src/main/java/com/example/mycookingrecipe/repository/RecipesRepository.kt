@@ -2,26 +2,27 @@ package com.example.mycookingrecipe.repository
 
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.model.RecipesDao
+import com.example.mycookingrecipe.model.RepositoryContract
 
-class RecipesRepository(private val dao: RecipesDao) {
+class RecipesRepository(private val dao: RecipesDao) : RepositoryContract {
 
-    suspend fun insert(recipe: Recipe) {
+    override suspend fun insert(recipe: Recipe) {
         dao.insert(recipe)
     }
 
-    suspend fun delete(recipe: Recipe) {
+    override suspend fun delete(recipe: Recipe) {
         dao.delete(recipe)
     }
 
-    suspend fun getAllRecipes(): List<Recipe> {
+    override suspend fun getAllRecipes(): List<Recipe> {
         return dao.getAllRecipes()
     }
 
-    suspend fun getRecipe(id: Int): Recipe {
+    override suspend fun getRecipe(id: Int): Recipe {
         return dao.getRecipe(id)
     }
 
-    suspend fun updateRecipe(recipe: Recipe) {
+    override suspend fun updateRecipe(recipe: Recipe) {
         dao.updateRecipe(
             recipe.id,
             recipe.name,

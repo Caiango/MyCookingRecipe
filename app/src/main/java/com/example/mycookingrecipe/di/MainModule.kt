@@ -1,6 +1,7 @@
 package com.example.mycookingrecipe.di
 
 import com.example.mycookingrecipe.model.DatabaseInstance
+import com.example.mycookingrecipe.model.RepositoryContract
 import com.example.mycookingrecipe.repository.RecipesRepository
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +21,7 @@ val daoModule = module {
 }
 
 val repositoryModule = module {
-    single {
+    single<RepositoryContract> {
         RecipesRepository(get())
     }
 }

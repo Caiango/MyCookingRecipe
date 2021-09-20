@@ -5,13 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.data.Resp
+import com.example.mycookingrecipe.model.RepositoryContract
 import com.example.mycookingrecipe.repository.RecipesRepository
 import com.example.mycookingrecipe.service.Call
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
+class RecipeViewModel(private val repositoryContract: RepositoryContract) : ViewModel() {
 
     val recipeList: MutableLiveData<List<Recipe>> = MutableLiveData()
     val recipeListFiltered: MutableLiveData<List<Recipe>> = MutableLiveData()
@@ -27,22 +28,22 @@ class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     response.recipes.forEach {
-                        repository.insert(it)
+                        repositoryContract.insert(it)
                     }
-                    recipeList.postValue(repository.getAllRecipes())
+                    recipeList.postValue(repositoryContract.getAllRecipes())
                 }
             }
         } else {
-            viewModelScope.launch { recipeList.postValue(repository.getAllRecipes()) }
+            viewModelScope.launch { recipeList.postValue(repositoryContract.getAllRecipes()) }
 
         }
     }
 
-    fun insertNewRecipe(recipe: Recipe) {
+    fun insertNewRecipe(recipe: Recipe, insertCallback: (String) -> Unit) {
         viewModelScope.launch {
             Call.callInsert(recipe)
             withContext(Dispatchers.IO) {
-                repository.insert(recipe)
+                repositoryContract.insert(recipe)
             }
         }
     }
@@ -63,18 +64,26 @@ class RecipeViewModel(private val repository: RecipesRepository) : ViewModel() {
         }
     }
 
-    fun locallyDelete(recipe: Recipe){
+    fun locallyDelete(recipe: Recipe) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repository.delete(recipe)
+                repositoryContract.delete(recipe)
             }
         }
     }
 
-    fun locallyUpdate(recipe: Recipe){
+    fun locallyInsert(recipe: Recipe) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repository.updateRecipe(recipe)
+                repositoryContract.insert(recipe)
+            }
+        }
+    }
+
+    fun locallyUpdate(recipe: Recipe) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repositoryContract.updateRecipe(recipe)
             }
         }
     }
