@@ -24,4 +24,6 @@
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="entrar_cadastrar">Entrar/Cadastrar</string>
+    <string name="edt_error">Por Favor, Preencha os campos</string>
+    <string name="create_account_dialog">Não detectamos sua conta. Deseja Criar Conta?</string>
 </resources>

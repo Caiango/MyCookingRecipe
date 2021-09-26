@@ -28,10 +28,10 @@
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="@string/login"
-        android:textSize="16sp"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textAlignment="center"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -44,10 +44,10 @@
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="@string/senha"
-        android:textAlignment="center"
-        android:textSize="16sp"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtLogin" />
@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/entrar_cadastrar"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
@@ -68,11 +69,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/title"
-        android:textStyle="bold"
         android:textColor="#ffffff"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/anim_splash" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
