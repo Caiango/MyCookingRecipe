@@ -21,4 +21,7 @@
     <string name="onError">Erro no servidor! Por favor tente novamente</string>
     <string name="onSuccess_Update">Atualizado com Sucesso!</string>
     <string name="success_delete">Deletado com Sucesso!</string>
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="entrar_cadastrar">Entrar/Cadastrar</string>
 </resources>
