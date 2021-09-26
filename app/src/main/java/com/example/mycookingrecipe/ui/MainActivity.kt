@@ -26,12 +26,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            val intent = Intent(this, MyRecipesActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

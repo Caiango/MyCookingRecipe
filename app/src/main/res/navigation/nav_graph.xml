@@ -10,6 +10,19 @@
         android:name="com.example.mycookingrecipe.ui.MainFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_FirstFragment_to_MyRecipesFragment"
+            app:destination="@id/MyRecipesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyRecipesFragment"
+        android:name="com.example.mycookingrecipe.ui.MyRecipesFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/activity_my_recipes">
+        <action
+            android:id="@+id/action_MyRecipesFragment_to_FirstFragment2"
+            app:destination="@id/FirstFragment" />
     </fragment>
 
 </navigation>

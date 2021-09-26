@@ -15,9 +15,6 @@
         android:theme="@style/Theme.MyCookingRecipe"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.MyRecipesActivity"
-            android:exported="true" />
-        <activity
             android:name=".ui.LoginActivity"
             android:exported="true" />
         <activity

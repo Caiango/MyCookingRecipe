@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mycookingrecipe.R
 import com.example.mycookingrecipe.data.Recipe
 import com.example.mycookingrecipe.databinding.FragmentMainBinding
 import com.example.mycookingrecipe.utils.Constants
@@ -58,6 +60,10 @@ class MainFragment : Fragment() {
         }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.setHasFixedSize(true)
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_MyRecipesFragment)
+        }
     }
 
     private fun setIntentSelectedRecipe(pos: Int) {
