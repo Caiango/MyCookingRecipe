@@ -1,16 +1,20 @@
 package com.example.mycookingrecipe.viewmodel
 
 import android.content.Context
-import android.content.Intent
-import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mycookingrecipe.ui.MainActivity
 
 class LoginViewModel : ViewModel() {
 
+    val successfullLogin: MutableLiveData<Boolean> = MutableLiveData()
+    val existingLogin: MutableLiveData<Boolean> = MutableLiveData()
+    val createdLogin: MutableLiveData<Boolean> = MutableLiveData()
+
     fun checkLogin(context: Context) {
-        Toast.makeText(context, "LOGANDO...", Toast.LENGTH_LONG).show()
-        val intent = Intent(context, MainActivity::class.java)
-        context.startActivity(intent)
+        successfullLogin.postValue(true)
+    }
+
+    fun createLogin(){
+        createdLogin.postValue(true)
     }
 }

@@ -10,15 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycookingrecipe.data.Recipe
-import com.example.mycookingrecipe.databinding.ActivityMyRecipesBinding
-import com.example.mycookingrecipe.databinding.FragmentMainBinding
+import com.example.mycookingrecipe.databinding.FragmentMyRecipesBinding
 import com.example.mycookingrecipe.utils.Constants
 import com.example.mycookingrecipe.viewmodel.RecipeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyRecipesFragment : Fragment() {
 
-    private var _binding: ActivityMyRecipesBinding? = null
+    private var _binding: FragmentMyRecipesBinding? = null
+
     private val binding get() = _binding!!
     private var recipeList = listOf<Recipe>()
     private var filteredRecipeList = listOf<Recipe>()
@@ -32,7 +32,8 @@ class MyRecipesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = ActivityMyRecipesBinding.inflate(inflater, container, false)
+
+        _binding = FragmentMyRecipesBinding.inflate(inflater, container, false)
         recipeViewModel.getMyRecipes()
 
         recipeViewModel.recipeList.observe(viewLifecycleOwner, {
@@ -60,6 +61,10 @@ class MyRecipesFragment : Fragment() {
         }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.setHasFixedSize(true)
+    }
+
+    private fun configAppBar(){
+
     }
 
     private fun setIntentSelectedRecipe(pos: Int) {

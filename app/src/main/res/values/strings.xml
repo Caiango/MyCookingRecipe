@@ -25,5 +25,7 @@
     <string name="senha">Senha</string>
     <string name="entrar_cadastrar">Entrar/Cadastrar</string>
     <string name="edt_error">Por Favor, Preencha os campos</string>
-    <string name="create_account_dialog">Não detectamos sua conta. Deseja Criar Conta?</string>
+    <string name="create_account_dialog">Criar Conta</string>
+    <string name="incorrect_login">Login/Senha Incorretos</string>
+    <string name="user_already_exists">Usuário já existente!</string>
 </resources>
